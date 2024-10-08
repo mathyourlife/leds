@@ -16,24 +16,35 @@
 // LED chipset type.
 #define CHIPSET     WS2812B
 
+// Set the light brightness from 0-255.  If too bright, you
+// can permanently damage the arduino, so use a small number to start.
+#define BRIGHTNESS  50
+
+// Set power limits to prevent damaging the Vout pin if powering the
+// lights from the arduino. 5V 400mA are safe defaults for the Arduino.
+// Higher values can be used if powering the lights from an external
+// power supply.
+#define MAX_VOLTS   5
+#define MAX_CURRENT_MILLIAMPS 400
+
 // Create a variable that will store the colors for the LEDs.
 CRGB leds[NUM_LEDS];
 uint8_t hue = 0;
 
 void setup() {
     // Configure the FastLED library to the LED strip.
-    FastLED.addLeds<CHIPSET, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS);
+    FastLED.addLeds<CHIPSET, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
 
     // clear all pixel data
     FastLED.clear(true);
 
     // Set the light brightness from 0-255.  If too bright, you
     // can permanently damage the arduino, so use a small number to start.
-    FastLED.setBrightness(100);
+    FastLED.setBrightness(BRIGHTNESS);
 
     // Protect the Arduino from drawing too much current to power
     // the LEDs via the USB.
-    FastLED.setMaxPowerInVoltsAndMilliamps(5, 400);
+    FastLED.setMaxPowerInVoltsAndMilliamps(MAX_VOLTS, MAX_CURRENT_MILLIAMPS);
 }
 
 void loop() {

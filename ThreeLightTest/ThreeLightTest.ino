@@ -12,6 +12,13 @@
 // can permanently damage the arduino, so use a small number to start.
 #define BRIGHTNESS  100
 
+// Set power limits to prevent damaging the Vout pin if powering the
+// lights from the arduino. 5V 400mA are safe defaults for the Arduino.
+// Higher values can be used if powering the lights from an external
+// power supply.
+#define MAX_VOLTS   5
+#define MAX_CURRENT_MILLIAMPS 400
+
 // Specify the color order of the LEDs. It differs by type of LED strip
 // and could be RGB, RBG, BRG, GBR, ...
 // Use ThreeLightTest to determine the correct order.
@@ -25,7 +32,7 @@ CRGB leds[NUM_LEDS];
 
 void setup() {
     // Configure the FastLED library to the LED strip.
-    FastLED.addLeds<CHIPSET, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS);
+    FastLED.addLeds<CHIPSET, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
 
     // clear all pixel data
     FastLED.clear(true);
@@ -35,7 +42,7 @@ void setup() {
 
     // Protect the Arduino from drawing too much current to power
     // the LEDs via the USB.
-    FastLED.setMaxPowerInVoltsAndMilliamps(5, 400);
+    FastLED.setMaxPowerInVoltsAndMilliamps(MAX_VOLTS, MAX_CURRENT_MILLIAMPS);
 }
 
 void loop() {
