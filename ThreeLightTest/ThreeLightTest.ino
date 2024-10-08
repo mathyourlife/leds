@@ -8,17 +8,6 @@
 // Specify how many LEDs on the strip will be controlled.
 #define NUM_LEDS    10
 
-// Specify the light brightness from 0-255.  If too bright, you
-// can permanently damage the arduino, so use a small number to start.
-#define BRIGHTNESS  100
-
-// Set power limits to prevent damaging the Vout pin if powering the
-// lights from the arduino. 5V 400mA are safe defaults for the Arduino.
-// Higher values can be used if powering the lights from an external
-// power supply.
-#define MAX_VOLTS   5
-#define MAX_CURRENT_MILLIAMPS 400
-
 // Specify the color order of the LEDs. It differs by type of LED strip
 // and could be RGB, RBG, BRG, GBR, ...
 // Use ThreeLightTest to determine the correct order.
@@ -26,6 +15,17 @@
 
 // LED chipset type.
 #define CHIPSET     WS2812B
+
+// Set the light brightness from 0-255.  If too bright, you
+// can permanently damage the arduino, so use a small number to start.
+#define BRIGHTNESS  50
+
+// Set power limits to prevent damaging the Vout pin if powering the
+// lights from the arduino. 5V 400mA are safe defaults for the Arduino.
+// Higher values can be used if powering the lights from an external
+// power supply.
+#define MAX_VOLTS   5
+#define MAX_CURRENT_MILLIAMPS 400
 
 // Create a variable that will store the colors for the LEDs.
 CRGB leds[NUM_LEDS];
