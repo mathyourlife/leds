@@ -31,6 +31,7 @@
 CRGB leds[NUM_LEDS];
 
 long ledPosition;
+int phase;
 #define WIDTH  4
 
 void setup() {
@@ -49,9 +50,36 @@ void setup() {
 
     randomSeed(analogRead(0));
     ledPosition = random(NUM_LEDS - 4);
+    phase = 0;
 }
 
 void loop() {
+
+	EVERY_N_SECONDS(4) {
+		phase++;
+	}
+
+    if (phase < 1) {
+        rainbow();
+    } else {
+        showWinner();
+    }
+
+    // Send the color instructions to the LED strip.
+    FastLED.show();
+}
+
+void rainbow() {
+    static int hue = 0;
+    for (int i = 0; i < NUM_LEDS; i++) {
+        leds[i] = CHSV(hue + (i / 2), 255, 255);
+    }
+    EVERY_N_MILLISECONDS(25) {
+        hue++; // hue will wrap around in the 0-255 range
+    }
+}
+
+void showWinner() {
     EVERY_N_MILLISECONDS(20) {
         fadeToBlackBy(leds, NUM_LEDS, 10);
     }
@@ -60,6 +88,4 @@ void loop() {
             leds[ledPosition + i] = CRGB::Green;
         }
     }
-    // Send the color instructions to the LED strip.
-    FastLED.show();
 }
