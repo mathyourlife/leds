@@ -6,7 +6,7 @@
 #define LED_PIN     7
 
 // Specify how many LEDs on the strip will be controlled.
-#define NUM_LEDS    10
+#define NUM_LEDS    144
 
 // Specify the color order of the LEDs. It differs by type of LED strip
 // and could be RGB, RBG, BRG, GBR, ...
